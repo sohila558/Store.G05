@@ -17,8 +17,8 @@ namespace Store.G05.Services.Mapping.Products
                      .ForMember(D => D.Brand, O => O.MapFrom(S => S.Brand.Name))
                      .ForMember(D => D.Type, O => O.MapFrom(S => S.Type.Name));
 
-            CreateMap<ProductBrand, ProductResponse>();
-            CreateMap<ProductType, ProductResponse>();
+            CreateMap<ProductBrand, BrandTypeResponse>();
+            CreateMap<ProductType, BrandTypeResponse>();
         }
     }
 }
