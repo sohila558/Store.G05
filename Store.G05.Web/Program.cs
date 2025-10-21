@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Store.G02.Persistence;
 using Store.G02.Persistence.Data.Contexts;
 using Store.G05.Domain.Contracts;
+using Store.G05.Services;
+using Store.G05.Services.Abstractions;
 using Store.G05.Services.Mapping.Products;
 using System.Threading.Tasks;
 
@@ -28,7 +30,8 @@ namespace Store.G05.Web
 
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile()));
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration)));
 
             var app = builder.Build();
 
@@ -36,6 +39,8 @@ namespace Store.G05.Web
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeAsync();
 
+            app.UseStaticFiles();
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
