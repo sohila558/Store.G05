@@ -12,9 +12,9 @@ namespace Store.G02.Persistence
 {
     // Generate Dynamic Query
 
-    public static class SpecificationsEvaluater<TEntity>
+    public static class SpecificationsEvaluater
     {
-        public static IQueryable<TEntity> GetQuery<TEntity, TKey>(IQueryable<TEntity> inputQuery, ISpecefications<TEntity, TKey> spec) where TEntity : BaseEntity<TKey>
+        public static IQueryable<TEntity> GetQuery<TKey, TEntity>(IQueryable<TEntity> inputQuery, ISpecefications<TKey, TEntity> spec) where TEntity : BaseEntity<TKey>
         {
             var query = inputQuery; // _context.Products
 
