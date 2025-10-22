@@ -10,7 +10,7 @@ namespace Store.G05.Domain.Contracts
 {
     public interface ISpecefications<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
-        List<Expression<Func<TKey, object>>> Includes { get; set; }
-        Expression<Func<TKey, bool>>? Criteria { get; set; }
+        List<Expression<Func<TEntity, object>>> Includes { get; set; }
+        Expression<Func<TEntity, bool>>? Criteria { get; set; }
     }
 }
