@@ -4,12 +4,12 @@ using System.Linq.Expressions;
 
 namespace Store.G05.Services.Specifications
 {
-    public class BaseSpecifications<TKey, TEntity> : ISpecefications<TKey, TEntity> where TEntity : BaseEntity<TEntity>
+    public class BaseSpecifications<TKey, TEntity> : ISpecefications<TKey, TEntity> where TEntity : BaseEntity<TKey>
     {
-        public List<Expression<Func<TKey, object>>> Includes { get; set; } = new List<Expression<Func<TKey, object>>>();
-        public Expression<Func<TKey, bool>>? Criteria { get; set; }
+        public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new List<Expression<Func<TEntity, object>>>();
+        public Expression<Func<TEntity, bool>>? Criteria { get; set; }
        
-        public BaseSpecifications(Expression<Func<TKey, bool>>? expression)
+        public BaseSpecifications(Expression<Func<TEntity, bool>>? expression)
         {
             Criteria = expression;
         }
