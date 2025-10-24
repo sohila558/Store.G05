@@ -60,6 +60,11 @@ namespace Store.G02.Persistence.Repositries
             _context.Remove(entity);
         }
 
+        public async Task<int> CountAsync(ISpecefications<TKey, TEntity> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();
+        }
+
         private IQueryable<TEntity> ApplySpecifications(ISpecefications<TKey, TEntity> spec)
         {
             return SpecificationsEvaluater.GetQuery(_context.Set<TEntity>(), spec);
