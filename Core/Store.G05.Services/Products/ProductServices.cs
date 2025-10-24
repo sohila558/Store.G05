@@ -15,9 +15,9 @@ namespace Store.G05.Services.Products
 {
     public class ProductServices(IUnitOfWork _unitOfWork, IMapper _mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId, string? sort, string? search)
         {
-            var spec = new ProductsWithBrandAndTypeSpecifications();
+            var spec = new ProductsWithBrandAndTypeSpecifications(brandId, typeId, sort, search);
 
             var products = await _unitOfWork.GetRepositry<int, Product>().GetAllAsync(spec);
             var result = _mapper.Map<IEnumerable<ProductResponse>>(products);
