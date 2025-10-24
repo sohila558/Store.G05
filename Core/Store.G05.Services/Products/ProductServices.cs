@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
+using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Products;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Products;
@@ -15,13 +17,19 @@ namespace Store.G05.Services.Products
 {
     public class ProductServices(IUnitOfWork _unitOfWork, IMapper _mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId, string? sort, string? search)
+        public async Task<PaginationResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParams parameters)
         {
-            var spec = new ProductsWithBrandAndTypeSpecifications(brandId, typeId, sort, search);
+            var spec = new ProductsWithBrandAndTypeSpecifications(parameters);
 
             var products = await _unitOfWork.GetRepositry<int, Product>().GetAllAsync(spec);
+
             var result = _mapper.Map<IEnumerable<ProductResponse>>(products);
-            return result;
+
+            var specCount = new ProductsCountSpecifications(parameters);
+
+            var count = await _unitOfWork.GetRepositry<int, Product>().CountAsync(specCount);
+
+            return new PaginationResponse<ProductResponse>(parameters.PageIndex, parameters.PageSize, count, result);
         }
 
         public async Task<ProductResponse> GetProductsByIdAsync(int id)

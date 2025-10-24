@@ -10,10 +10,25 @@ namespace Store.G05.Services.Specifications
         public Expression<Func<TEntity, bool>>? Criteria { get; set; }
         public Expression<Func<TEntity, object>>? OrderBy { get; set; }
         public Expression<Func<TEntity, object>>? OrderByDescending { get; set; }
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPagination { get; set; }
 
         public BaseSpecifications(Expression<Func<TEntity, bool>>? expression)
         {
             Criteria = expression;
+        }
+
+        public void ApplyPagination(int pageSize, int pageIndex)
+        {
+            // PageIndex = 3
+            // PageSize = 5
+            // Skip = [(PageIndex - 1) * PageSize] = ( 3 - 1) * 5
+            // Take = PageSize
+
+            IsPagination = true;
+            Skip = (pageIndex - 1) * pageSize;
+            Take = pageSize;
         }
 
         public void AddOrderBy(Expression<Func<TEntity, object>>? expression)

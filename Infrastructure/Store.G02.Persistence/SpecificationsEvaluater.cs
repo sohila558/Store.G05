@@ -32,9 +32,14 @@ namespace Store.G02.Persistence
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
 
-                // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand)
-                // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand).Include(P => P.Type)
-                query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
+            if (spec.IsPagination)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
+            // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand)
+            // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand).Include(P => P.Type)
+            query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
 
             return query;
         }
