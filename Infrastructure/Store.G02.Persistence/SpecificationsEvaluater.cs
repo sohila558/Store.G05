@@ -23,9 +23,18 @@ namespace Store.G02.Persistence
                 query = query.Where(spec.Criteria); //_context.Products.Where(P => P.id == 12)
             }
 
-            // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand)
-            // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand).Include(P => P.Type)
-            query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
+            if (spec.OrderBy is not null)
+            {
+                query = query.OrderBy(spec.OrderBy); //_context.Products.Where(P => P.id == 12)
+            }
+            else if(spec.OrderByDescending is not null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+
+                // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand)
+                // _context.Proucts.Where(P => P.id == 12).Include(P => P.Brand).Include(P => P.Type)
+                query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
 
             return query;
         }

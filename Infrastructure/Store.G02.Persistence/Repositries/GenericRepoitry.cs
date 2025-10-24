@@ -23,19 +23,19 @@ namespace Store.G02.Persistence.Repositries
             return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
 
-        //public async Task<IEnumerable<TEntity>> GetAllAsync(bool changeTracker = false)
-        //{
-        //    if(typeof(TEntity) == typeof(Product))
-        //    {
-        //        return changeTracker ?
-        //            await _context.Products.Include(P => P.Brand).Include(P => P.Type).ToListAsync() as IEnumerable<TEntity>
-        //            : await _context.Products.Include(P => P.Brand).Include(P => P.Type).AsNoTracking().ToListAsync() as IEnumerable<TEntity>;
-        //    }
+        public async Task<IEnumerable<TEntity>> GetAllAsync(bool changeTracker = false)
+        {
+            if (typeof(TEntity) == typeof(Product))
+            {
+                return changeTracker ?
+                    await _context.Products.Include(P => P.Brand).Include(P => P.Type).ToListAsync() as IEnumerable<TEntity>
+                    : await _context.Products.Include(P => P.Brand).Include(P => P.Type).AsNoTracking().ToListAsync() as IEnumerable<TEntity>;
+            }
 
-        //    return changeTracker ?
-        //        await _context.Set<TEntity>().ToListAsync()
-        //        : await _context.Set<TEntity>().AsNoTracking().ToListAsync();
-        //}
+            return changeTracker ?
+                await _context.Set<TEntity>().ToListAsync()
+                : await _context.Set<TEntity>().AsNoTracking().ToListAsync();
+        }
 
         //public async Task<TEntity?> GetByIdAsync(TKey key)
         //{
