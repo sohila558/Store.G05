@@ -4,6 +4,7 @@ using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Products;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Products;
+using Store.G05.Domain.Exceptions;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Specifications;
 using Store.G05.Services.Specifications.Products;
@@ -37,6 +38,7 @@ namespace Store.G05.Services.Products
             var spec = new ProductsWithBrandAndTypeSpecifications(id);
 
             var product = await _unitOfWork.GetRepositry<int, Product>().GetByIdAsync(spec);
+            if (product is null) throw new ProductNotFoundExceptions(id);
             var result = _mapper.Map<ProductResponse>(product);
             return result;
         }
