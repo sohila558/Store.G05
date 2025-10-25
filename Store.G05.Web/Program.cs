@@ -6,6 +6,7 @@ using Store.G05.Domain.Contracts;
 using Store.G05.Services;
 using Store.G05.Services.Abstractions;
 using Store.G05.Services.Mapping.Products;
+using Store.G05.Web.Middlewares;
 using System.Threading.Tasks;
 
 namespace Store.G05.Web
@@ -39,6 +40,8 @@ namespace Store.G05.Web
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeAsync();
+
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
             app.UseStaticFiles();
             
