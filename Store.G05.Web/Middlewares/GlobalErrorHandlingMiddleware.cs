@@ -1,4 +1,5 @@
 ﻿using Store.G02.Shared.ErrorModels;
+using Store.G05.Domain.Exceptions;
 
 namespace Store.G05.Web.Middlewares
 {
@@ -34,9 +35,16 @@ namespace Store.G05.Web.Middlewares
 
                 var response = new ErrorDetails()
                 {
-                    StatusCode = StatusCodes.Status500InternalServerError,
                     ErrorMessage = ex.Message
                 };
+
+                response.StatusCode = ex switch
+                {
+                    NotFoundException => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+
+                context.Response.StatusCode = response.StatusCode;
 
                 await context.Response.WriteAsJsonAsync(response);
             }
