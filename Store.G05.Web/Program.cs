@@ -9,6 +9,7 @@ using Store.G05.Domain.Contracts;
 using Store.G05.Services;
 using Store.G05.Services.Abstractions;
 using Store.G05.Services.Mapping.Products;
+using Store.G05.Web.Extensions;
 using Store.G05.Web.Middlewares;
 using System.Threading.Tasks;
 
@@ -22,61 +23,11 @@ namespace Store.G05.Web
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration)));
-            builder.Services.Configure<ApiBehaviorOptions>(config =>
-            {
-                config.InvalidModelStateResponseFactory = (actionContext) =>
-                {
-                    var errors = actionContext.ModelState.Where(m => m.Value.Errors.Any())
-                                 .Select(m => new ValidationError()
-                                 {
-                                     Field = m.Key,
-                                     Errors = m.Value.Errors.Select(errors => errors.ErrorMessage)
-                                 });
-                    var response = new ValidationErrorResponse()        
-                    {
-                        Errors = errors  
-                    };
-                    return new BadRequestObjectResult(response);
-                };
-            });
+            builder.Services.RegisterAllServices(builder.Configuration);
 
             var app = builder.Build();
 
-            using var scope = app.Services.CreateScope();
-            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-            await dbInitializer.InitializeAsync();
-
-            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
-
-            app.UseStaticFiles();
-            
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
+            await app.ConfigureMiddlewaresAsync();
 
             app.Run();
         }
