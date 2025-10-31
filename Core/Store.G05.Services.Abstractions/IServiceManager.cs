@@ -1,4 +1,5 @@
-﻿using Store.G05.Services.Abstractions.Products;
+﻿using Store.G05.Services.Abstractions.Baskets;
+using Store.G05.Services.Abstractions.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Store.G05.Services.Abstractions
     public interface IServiceManager
     {
         IProductService ProductService { get; }
+        IBasketServices BasketServices { get; }
     }
 }
