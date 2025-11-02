@@ -19,13 +19,13 @@ namespace Store.G05.Services.Baskets
             var basket = await basketRepositry.GetBasketAsync(id);
             if (basket is null) throw new BasketNotFoundException(id);
             var result = mapper.Map<BasketDto>(basket);
-            return (result);
+            return result;
         }
 
         public async Task<BasketDto?> SetBasketAsync(BasketDto basketDto)
         {
             var basket = mapper.Map<CustomerBasket>(basketDto);
-            basket = await basketRepositry.SetBasketAsync(basket, TimeSpan.FromDays(30));
+            basket = await basketRepositry.SetBasketAsync(basket);
             if (basket is null) throw new BasketCreateOrUpdateBadRequestException();
             var result = mapper.Map<BasketDto>(basket);
             return result;
@@ -34,7 +34,7 @@ namespace Store.G05.Services.Baskets
         public async Task<bool> DeleteBasketAsync(string id)
         {
             var flag = await basketRepositry.DeleteBasketAsync(id);
-            if (!flag) throw new BasketDeleteBadRequestException();
+            if (flag == false) throw new BasketDeleteBadRequestException();
             return flag;
         }
 
