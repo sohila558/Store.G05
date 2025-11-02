@@ -31,6 +31,7 @@ namespace Store.G02.Persistence.Repositries
             var flag = await _database.StringSetAsync(basket.Id, redisValue, TimeSpan.FromDays(30));
             return flag ? await GetBasketAsync(basket.Id) : null;
         }
+
         public async Task<bool> DeleteBasketAsync(string id)
         {
             return await _database.KeyDeleteAsync(id);

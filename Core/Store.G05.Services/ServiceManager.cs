@@ -4,6 +4,7 @@ using Store.G05.Services.Abstractions;
 using Store.G05.Services.Abstractions.Baskets;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Baskets;
+using Store.G05.Services.Caches;
 using Store.G05.Services.Products;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,17 @@ using System.Threading.Tasks;
 
 namespace Store.G05.Services
 {
-    public class ServiceManager(IUnitOfWork _unitOfWork, IMapper _mapper, IBasketRepositry basketRepositry) : IServiceManager
+    public class ServiceManager(
+        IUnitOfWork _unitOfWork,
+        IMapper _mapper,
+        IBasketRepositry basketRepositry,
+        ICacheRepositry cacheRepositry
+        ) : IServiceManager
     {
         public IProductService ProductService { get; } = new ProductServices(_unitOfWork, _mapper);
 
         public IBasketServices BasketServices { get; } = new BasketServices(basketRepositry, _mapper);
+
+        public ICacheServices CacheServices { get; } = new CacheServices(cacheRepositry);
     }
 }

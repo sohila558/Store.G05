@@ -10,7 +10,7 @@ namespace Store.G05.Domain.Contracts
     public interface IBasketRepositry
     {
         Task<CustomerBasket?> GetBasketAsync(string id);
-        Task<CustomerBasket?> SetBasketAsync(CustomerBasket basket, TimeSpan? timeToLive);
+        Task<CustomerBasket?> SetBasketAsync(CustomerBasket basket, TimeSpan? timeToLive = null);
         Task<bool> DeleteBasketAsync(string id);
     }
 }
