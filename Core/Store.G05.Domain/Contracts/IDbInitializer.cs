@@ -9,5 +9,6 @@ namespace Store.G05.Domain.Contracts
     public interface IDbInitializer
     {
         Task InitializeAsync();
+        Task InitializeIdentityAsync();
     }
 }
