@@ -13,5 +13,6 @@ namespace Store.G05.Services.Abstractions
         IProductService ProductService { get; }
         IBasketServices BasketServices { get; }
         ICacheServices CacheServices { get; }
+        IAuthServices AuthServices { get; }
     }
 }

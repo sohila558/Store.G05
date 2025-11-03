@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Store.G05.Domain.Contracts;
+using Store.G05.Domain.Entities.Identity;
 using Store.G05.Services.Abstractions;
 using Store.G05.Services.Abstractions.Baskets;
 using Store.G05.Services.Abstractions.Products;
@@ -18,7 +20,8 @@ namespace Store.G05.Services
         IUnitOfWork _unitOfWork,
         IMapper _mapper,
         IBasketRepositry basketRepositry,
-        ICacheRepositry cacheRepositry
+        ICacheRepositry cacheRepositry,
+        UserManager<AppUser> userManager
         ) : IServiceManager
     {
         public IProductService ProductService { get; } = new ProductServices(_unitOfWork, _mapper);
@@ -26,5 +29,7 @@ namespace Store.G05.Services
         public IBasketServices BasketServices { get; } = new BasketServices(basketRepositry, _mapper);
 
         public ICacheServices CacheServices { get; } = new CacheServices(cacheRepositry);
+
+        public IAuthServices AuthServices { get; } = new AuthServices(userManager);
     }
 }
