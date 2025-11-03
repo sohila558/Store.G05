@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Store.G02.Persistence;
+using Store.G02.Persistence.Identity;
 using Store.G02.Shared.ErrorModels;
 using Store.G05.Domain.Contracts;
+using Store.G05.Domain.Entities.Identity;
 using Store.G05.Services;
 using Store.G05.Web.Middlewares;
 using System.Threading.Tasks;
@@ -18,6 +21,7 @@ namespace Store.G05.Web.Extensions
             services.AddInfrastructureServices(configuration);
             services.AddApplicationServices(configuration);
             services.ConfiguresServices();
+            services.AddIdentityServices();
 
             return services;
         }
@@ -25,6 +29,13 @@ namespace Store.G05.Web.Extensions
         private static IServiceCollection AddBuiltInServices(this IServiceCollection services)
         {
             services.AddControllers();
+            return services;
+        }
+
+        private static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        {
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<StoreIdentityDbContext>();
             return services;
         }
 
@@ -91,7 +102,7 @@ namespace Store.G05.Web.Extensions
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeAsync();
-
+            await dbInitializer.InitializeIdentityAsync();
             return app;
         }
 

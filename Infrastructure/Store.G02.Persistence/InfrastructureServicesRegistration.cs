@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using Store.G02.Persistence.Data.Contexts;
+using Store.G02.Persistence.Identity;
 using Store.G02.Persistence.Repositries;
 using Store.G05.Domain.Contracts;
 using System;
@@ -26,6 +27,11 @@ namespace Store.G02.Persistence
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBasketRepositry, BasketRepositry>();
             services.AddScoped<ICacheRepositry, CacheRepositry>();
+            services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
+
             services.AddSingleton<IConnectionMultiplexer>((serviceProvier) =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis")!);
