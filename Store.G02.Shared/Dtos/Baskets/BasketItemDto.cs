@@ -1,4 +1,4 @@
-﻿namespace Store.G02.Shared.Dtos
+﻿namespace Store.G02.Shared.Dtos.Baskets
 {
     public class BasketItemDto
     {
