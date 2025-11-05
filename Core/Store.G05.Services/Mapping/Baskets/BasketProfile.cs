@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Store.G02.Shared.Dtos;
+using Store.G02.Shared.Dtos.Baskets;
 using Store.G05.Domain.Entities.Baskets;
 using System;
 using System.Collections.Generic;

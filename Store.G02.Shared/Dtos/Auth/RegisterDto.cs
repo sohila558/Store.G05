@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G02.Shared.Dtos
+namespace Store.G02.Shared.Dtos.Auth
 {
     public class RegisterDto
     {

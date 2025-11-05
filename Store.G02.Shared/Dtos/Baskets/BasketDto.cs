@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G02.Shared.Dtos
+namespace Store.G02.Shared.Dtos.Baskets
 {
     public class BasketDto
     {

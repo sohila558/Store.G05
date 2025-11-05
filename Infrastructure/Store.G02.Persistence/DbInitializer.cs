@@ -4,6 +4,7 @@ using Store.G02.Persistence.Data.Contexts;
 using Store.G02.Persistence.Identity;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Identity;
+using Store.G05.Domain.Entities.Orders;
 using Store.G05.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,30 @@ namespace Store.G02.Persistence
             }
 
             // Data Seeding
-            
+
+            // Delivery Method Seeding
+            if (!_context.DeliveryMethods.Any())
+            {
+                // Read All Data From Json File brands.json
+                //C:\Users\Mahmoud Rayan\source\repos\Store.G05\Infrastructure\Store.G02.Persistence\Data\DataSeeding
+
+                var deliverydata = await File.ReadAllTextAsync(@"..\Infrastructure\Store.G02.Persistence\Data\DataSeeding\delivery.json");
+
+                // Convert The JsonString To List<ProductBrand>
+
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliverydata);
+
+                // Add List To Db
+
+                if (deliveryMethods is not null && deliveryMethods.Count > 0)
+                {
+                    await _context.DeliveryMethods.AddRangeAsync(deliveryMethods);
+                }
+            }
+
             // Product Brands 
 
-            if(!_context.ProductBrands.Any())
+            if (!_context.ProductBrands.Any())
             {
                 // Read All Data From Json File brands.json
                 //C:\Users\Mahmoud Rayan\source\repos\Store.G05\Infrastructure\Store.G02.Persistence\Data\DataSeeding

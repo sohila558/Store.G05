@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Store.G02.Shared;
-using Store.G02.Shared.Dtos;
+using Store.G02.Shared.Dtos.Auth;
 using Store.G05.Domain.Entities.Identity;
 using Store.G05.Domain.Exceptions;
 using Store.G05.Services.Abstractions.Auth;
