@@ -37,14 +37,15 @@ namespace Store.G02.Persistence.Repositries
                 : await _context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        //public async Task<TEntity?> GetByIdAsync(TKey key)
-        //{
-        //    if(typeof(TEntity) == typeof(Product))
-        //    {
-        //        return await _context.Products.Include(P => P.Brand).Include(P => P.Type).FirstOrDefaultAsync(P => P.Id == key as int?) as TEntity;
-        //    }
-        //    return await _context.Set<TEntity>().FindAsync(key);
-        //}
+        public async Task<TEntity?> GetAsync(TKey key)
+        {
+            if (typeof(TEntity) == typeof(Product))
+            {
+                return await _context.Products.Include(P => P.Brand).Include(P => P.Type).FirstOrDefaultAsync(P => P.Id == key as int?) as TEntity;
+            }
+            return await _context.Set<TEntity>().FindAsync(key);
+        }
+
         public async Task AddAsync(TEntity entity)
         {
             await _context.AddAsync(entity);
