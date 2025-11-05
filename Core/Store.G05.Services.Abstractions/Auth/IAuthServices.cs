@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G05.Services.Abstractions
+namespace Store.G05.Services.Abstractions.Auth
 {
     public interface IAuthServices
     {
