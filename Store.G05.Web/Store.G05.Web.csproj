@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Infrastructure\Store.G02.Presentation\Store.G02.Presentation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
