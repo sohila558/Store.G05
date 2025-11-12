@@ -3,15 +3,10 @@ using Store.G02.Shared.Dtos.Orders;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Orders;
 using Store.G05.Domain.Entities.Products;
-using Store.G05.Domain.Exceptions.BadRequest;
-using Store.G05.Domain.Exceptions.NotFound;
+using Store.G05.Domain.Exceptions.BadRequestException;
+using Store.G05.Domain.Exceptions.NotFoundExceptions;
 using Store.G05.Services.Abstractions.Orders;
 using Store.G05.Services.Specifications.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.G05.Services.Orders
 {
@@ -54,7 +49,7 @@ namespace Store.G05.Services.Orders
             var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
 
             // Create Order In DB
-            _unitOfWork.GetRepositry<Guid, Order>().AddAsync(order);
+            await _unitOfWork.GetRepositry<Guid, Order>().AddAsync(order);
             var count = await _unitOfWork.SaveChangesAsync();
             if (count <= 0) throw new CraeteOrderBadRequestException();
 

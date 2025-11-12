@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G05.Domain.Exceptions
+namespace Store.G05.Domain.Exceptions.UnAuthorizedException
 {
     public class ValidationException(IEnumerable<string> errors) : Exception("Validation Errors !")
     {

@@ -1,21 +1,14 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Auth;
 using Store.G05.Domain.Entities.Identity;
 using Store.G05.Domain.Exceptions;
-using Store.G05.Domain.Exceptions.UnAuthorized;
 using Store.G05.Services.Abstractions.Auth;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.G05.Services.Auth
 {
