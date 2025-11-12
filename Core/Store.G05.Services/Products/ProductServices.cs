@@ -5,6 +5,7 @@ using Store.G02.Shared.Dtos.Products;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Products;
 using Store.G05.Domain.Exceptions;
+using Store.G05.Domain.Exceptions.NotFound;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Specifications;
 using Store.G05.Services.Specifications.Products;

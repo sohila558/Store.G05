@@ -3,6 +3,8 @@ using Store.G02.Shared.Dtos.Baskets;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Baskets;
 using Store.G05.Domain.Exceptions;
+using Store.G05.Domain.Exceptions.BadRequest;
+using Store.G05.Domain.Exceptions.NotFound;
 using Store.G05.Services.Abstractions.Baskets;
 using System;
 using System.Collections.Generic;

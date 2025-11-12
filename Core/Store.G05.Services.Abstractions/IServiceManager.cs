@@ -1,5 +1,6 @@
 ﻿using Store.G05.Services.Abstractions.Auth;
 using Store.G05.Services.Abstractions.Baskets;
+using Store.G05.Services.Abstractions.Orders;
 using Store.G05.Services.Abstractions.Products;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Store.G05.Services.Abstractions
         IBasketServices BasketServices { get; }
         ICacheServices CacheServices { get; }
         IAuthServices AuthServices { get; }
+        IOrderServices OrderServices { get; }
     }
 }

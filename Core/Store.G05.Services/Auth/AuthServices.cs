@@ -7,6 +7,7 @@ using Store.G02.Shared;
 using Store.G02.Shared.Dtos.Auth;
 using Store.G05.Domain.Entities.Identity;
 using Store.G05.Domain.Exceptions;
+using Store.G05.Domain.Exceptions.UnAuthorized;
 using Store.G05.Services.Abstractions.Auth;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace Store.G05.Services.Auth
 {
     public class AuthServices(UserManager<AppUser> _userManager, IOptions<JwtOptions> options) : IAuthServices
     {
-        public async Task<UserResultDto> LoginAsync(LogInDto logInDto)
+        public async Task<UserResponse> LoginAsync(LogInDto logInDto)
         {
             var user = await _userManager.FindByEmailAsync(logInDto.Email);
             if (user is null) throw new UnAuthorizedException();
             var flag = await _userManager.CheckPasswordAsync(user, logInDto.Password);
             if (!flag) throw new UnAuthorizedException();
-            return new UserResultDto()
+            return new UserResponse()
             {
                 DisplayName = user.DisplayName,
                 Email = user.Email,
@@ -34,7 +35,7 @@ namespace Store.G05.Services.Auth
             };
         }
 
-        public async Task<UserResultDto> RegisterAsync(RegisterDto registerDto)
+        public async Task<UserResponse> RegisterAsync(RegisterDto registerDto)
         {
             var user = new AppUser()
             {
@@ -50,7 +51,7 @@ namespace Store.G05.Services.Auth
                 throw new ValidationException(errors);
             }
 
-            return new UserResultDto()
+            return new UserResponse()
             {
                 DisplayName = user.DisplayName,
                 Email = user.Email,
