@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Shared.Dtos.Auth
 {
-    public class UserResultDto
+    public class UserResponse
     {
         public string Email { get; set; }
         public string DisplayName { get; set; }

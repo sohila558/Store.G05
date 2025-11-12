@@ -8,10 +8,12 @@ using Store.G05.Domain.Entities.Identity;
 using Store.G05.Services.Abstractions;
 using Store.G05.Services.Abstractions.Auth;
 using Store.G05.Services.Abstractions.Baskets;
+using Store.G05.Services.Abstractions.Orders;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Auth;
 using Store.G05.Services.Baskets;
 using Store.G05.Services.Caches;
+using Store.G05.Services.Orders;
 using Store.G05.Services.Products;
 using System;
 using System.Collections.Generic;
@@ -37,5 +39,7 @@ namespace Store.G05.Services
         public ICacheServices CacheServices { get; } = new CacheServices(cacheRepositry);
 
         public IAuthServices AuthServices { get; } = new AuthServices(userManager, options);
+
+        public IOrderServices OrderServices { get; } = new OrderServices(_unitOfWork, _mapper, basketRepositry);
     }
 }

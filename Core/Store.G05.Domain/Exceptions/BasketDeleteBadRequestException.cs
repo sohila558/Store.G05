@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G05.Domain.Exceptions.BadRequest
+namespace Store.G05.Domain.Exceptions
 {
     public class BasketDeleteBadRequestException() : BadRequestException($"Invalid Operation When Delete Basket !")
     {
