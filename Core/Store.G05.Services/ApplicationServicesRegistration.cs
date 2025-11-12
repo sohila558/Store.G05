@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Store.G02.Shared;
 using Store.G05.Services.Abstractions;
+using Store.G05.Services.Mapping;
 using Store.G05.Services.Mapping.Baskets;
 using Store.G05.Services.Mapping.Products;
 using System;
@@ -19,6 +20,7 @@ namespace Store.G05.Services
         {
             services.AddAutoMapper(M => M.AddProfile(new ProductProfile(configuration)));
             services.AddAutoMapper(M => M.AddProfile(new BasketProfile()));
+            services.AddAutoMapper(M => M.AddProfile(new OrderProfile()));
             services.AddScoped<IServiceManager, ServiceManager>();
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.G05.Domain.Exceptions
+namespace Store.G05.Domain.Exceptions.NotFound
 {
     public class ProductNotFoundExceptions(int id) : NotFoundException($"Product with id {id} NotFound")
     {
