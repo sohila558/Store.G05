@@ -1,5 +1,7 @@
 ﻿using Store.G02.Shared.ErrorModels;
-using Store.G05.Domain.Exceptions;
+using Store.G05.Domain.Exceptions.BadRequestException;
+using Store.G05.Domain.Exceptions.NotFoundException;
+using Store.G05.Domain.Exceptions.UnAuthorizedException;
 
 namespace Store.G05.Web.Middlewares
 {
