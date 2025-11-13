@@ -10,7 +10,7 @@ namespace Store.G05.Services.Specifications.Products
 {
     public class ProductsCountSpecifications : BaseSpecifications<int, Product>
     {
-        public ProductsCountSpecifications(ProductQueryParams parameters) : base
+        public ProductsCountSpecifications(ProductQueryParameters parameters) : base
             (
                 P =>
                 (!parameters.BrandId.HasValue || P.BrandId == parameters.BrandId)

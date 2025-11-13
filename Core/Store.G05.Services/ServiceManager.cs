@@ -38,7 +38,7 @@ namespace Store.G05.Services
 
         public ICacheServices CacheServices { get; } = new CacheServices(cacheRepositry);
 
-        public IAuthServices AuthServices { get; } = new AuthServices(userManager, options);
+        public IAuthServices AuthServices { get; } = new AuthServices(userManager, options, _mapper);
 
         public IOrderServices OrderServices { get; } = new OrderServices(_unitOfWork, _mapper, basketRepositry);
     }

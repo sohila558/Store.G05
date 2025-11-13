@@ -15,7 +15,7 @@ namespace Store.G05.Services.Specifications.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(ProductQueryParams parameters) : base
+        public ProductsWithBrandAndTypeSpecifications(ProductQueryParameters parameters) : base
             (
                 P => 
                 (!parameters.BrandId.HasValue || P.BrandId == parameters.BrandId)
