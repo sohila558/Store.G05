@@ -13,7 +13,7 @@ namespace Store.G02.Presentation
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController(IServiceManager _serviceManager) : ControllerBase
+    public class OrdersController(IServiceManager _serviceManager) : ControllerBase
     {
         [HttpPost]
         [Authorize]
@@ -24,14 +24,14 @@ namespace Store.G02.Presentation
             return Ok(result);
         }
 
-        [HttpGet("deliveryMethod")]
+        [HttpGet("deliveryMethods")]
         public async Task<IActionResult> GetAllDeliveryMethod()
         {
             var result = await _serviceManager.OrderServices.GetAllDeliveryMethodAsync();
             return Ok(result);
         }
 
-        [HttpGet("OrderById")]
+        [HttpGet("orderById")]
         [Authorize]
         public async Task<IActionResult> GetOrderByIdForSpecificUser(Guid id)
         {
@@ -40,8 +40,8 @@ namespace Store.G02.Presentation
             return Ok(result);
         }
 
-        [HttpGet]
-        [Authorize("Orders")]
+        [HttpGet("orders")]
+        [Authorize]
         public async Task<IActionResult> GetOrdersForSpecificUser()
         {
             var userEmailClaim = User.FindFirst(ClaimTypes.Email);

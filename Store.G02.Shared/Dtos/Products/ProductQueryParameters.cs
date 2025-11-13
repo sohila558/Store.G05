@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Shared.Dtos.Products
 {
-    public class ProductQueryParams
+    public class ProductQueryParameters
     {
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }

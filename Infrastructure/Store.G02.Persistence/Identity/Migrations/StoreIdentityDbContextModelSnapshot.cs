@@ -317,11 +317,13 @@ namespace Store.G02.Persistence.Identity.Migrations
 
             modelBuilder.Entity("Store.G05.Domain.Entities.Identity.Address", b =>
                 {
-                    b.HasOne("Store.G05.Domain.Entities.Identity.AppUser", null)
+                    b.HasOne("Store.G05.Domain.Entities.Identity.AppUser", "AppUser")
                         .WithOne("Address")
                         .HasForeignKey("Store.G05.Domain.Entities.Identity.Address", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Store.G05.Domain.Entities.Identity.AppUser", b =>

@@ -5,7 +5,7 @@ using Store.G02.Shared.Dtos.Products;
 using Store.G05.Domain.Contracts;
 using Store.G05.Domain.Entities.Products;
 using Store.G05.Domain.Exceptions;
-using Store.G05.Domain.Exceptions.NotFound;
+using Store.G05.Domain.Exceptions.NotFoundExceptions;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Specifications;
 using Store.G05.Services.Specifications.Products;
@@ -19,7 +19,7 @@ namespace Store.G05.Services.Products
 {
     public class ProductServices(IUnitOfWork _unitOfWork, IMapper _mapper) : IProductService
     {
-        public async Task<PaginationResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParams parameters)
+        public async Task<PaginationResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters parameters)
         {
             var spec = new ProductsWithBrandAndTypeSpecifications(parameters);
 

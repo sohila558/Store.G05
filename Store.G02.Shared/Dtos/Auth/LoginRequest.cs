@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Store.G02.Shared.Dtos.Auth
 {
-    public class LogInDto
+    public class LoginRequest
     {
         [EmailAddress]
         public string Email { get; set; }
