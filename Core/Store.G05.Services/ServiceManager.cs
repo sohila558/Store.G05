@@ -9,11 +9,13 @@ using Store.G05.Services.Abstractions;
 using Store.G05.Services.Abstractions.Auth;
 using Store.G05.Services.Abstractions.Baskets;
 using Store.G05.Services.Abstractions.Orders;
+using Store.G05.Services.Abstractions.Payments;
 using Store.G05.Services.Abstractions.Products;
 using Store.G05.Services.Auth;
 using Store.G05.Services.Baskets;
 using Store.G05.Services.Caches;
 using Store.G05.Services.Orders;
+using Store.G05.Services.Payments;
 using Store.G05.Services.Products;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,8 @@ namespace Store.G05.Services
         IBasketRepositry basketRepositry,
         ICacheRepositry cacheRepositry,
         UserManager<AppUser> userManager,
-        IOptions<JwtOptions> options
+        IOptions<JwtOptions> options,
+        IConfiguration _configuration
         ) : IServiceManager
     {
         public IProductService ProductService { get; } = new ProductServices(_unitOfWork, _mapper);
@@ -41,5 +44,6 @@ namespace Store.G05.Services
         public IAuthServices AuthServices { get; } = new AuthServices(userManager, options, _mapper);
 
         public IOrderServices OrderServices { get; } = new OrderServices(_unitOfWork, _mapper, basketRepositry);
+        public IPaymentServices PaymentServices { get; } = new PaymentServices(basketRepositry, _unitOfWork, _configuration, _mapper);
     }
 }
