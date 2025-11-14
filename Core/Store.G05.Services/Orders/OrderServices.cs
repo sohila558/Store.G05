@@ -46,7 +46,7 @@ namespace Store.G05.Services.Orders
             var subTotal = orderItems.Sum(OI => OI.Price * OI.Quantity);
 
             // Create Order
-            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
+            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
 
             // Create Order In DB
             await _unitOfWork.GetRepositry<Guid, Order>().AddAsync(order);
