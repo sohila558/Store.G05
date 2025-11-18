@@ -45,6 +45,13 @@ namespace Store.G05.Services.Orders
             // 4. Calculate SubTotal
             var subTotal = orderItems.Sum(OI => OI.Price * OI.Quantity);
 
+            // Check Orer Exist
+            var spec = new OrderWithPaymentIntentSpecification(basket.PaymentIntentId);
+            var existsOrder = await _unitOfWork.GetRepositry<Guid, Order>().GetByIdAsync(spec);
+
+            if (existsOrder is not null) _unitOfWork.GetRepositry<Guid, Order>().Delete(existsOrder);
+
+
             // Create Order
             var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
 
