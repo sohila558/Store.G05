@@ -8,6 +8,11 @@ namespace Store.G02.Shared
 {
     public class PaginationResponse<TEntity>
     {
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public int Count { get; set; }
+        public IEnumerable<TEntity> Data { get; set; }
+
         public PaginationResponse(int pageIndex, int pageSize, int count, IEnumerable<TEntity> data)
         {
             PageIndex = pageIndex;
@@ -16,9 +21,5 @@ namespace Store.G02.Shared
             Data = data;
         }
 
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public int Count { get; set; }
-        public IEnumerable<TEntity> Data { get; set; }
     }
 }

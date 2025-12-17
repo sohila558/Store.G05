@@ -6,6 +6,7 @@ using Store.G05.Domain.Entities.Orders;
 using Store.G05.Domain.Entities.Products;
 using Store.G05.Domain.Exceptions.NotFoundExceptions;
 using Store.G05.Services.Abstractions.Payments;
+using Store.G05.Services.Specifications.Orders;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,54 @@ namespace Store.G05.Services.Payments
             basket = await _basketRepositry.SetBasketAsync(basket, TimeSpan.FromDays(1));
 
             return _mapper.Map<BasketDto>(basket);
+        }
+
+        public async Task UpdateOrderPaymentStatusAsync(string jsonRequest, string stripeHeader)
+        {
+            var endpointSecret = _configuration.GetRequiredSection("Stripe")["EndPointSecret"];
+            var stripeEvent = EventUtility.ConstructEvent(jsonRequest,
+                      stripeHeader, endpointSecret);
+
+            var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+            switch (stripeEvent.Type)
+            {
+                case EventTypes.PaymentIntentPaymentFailed:
+                    await UpdatePaymentFailedAsync(paymentIntent.Id);
+                    break;
+                case EventTypes.PaymentIntentSucceeded:
+                    await UpdatePaymentReceivedAsync(paymentIntent.Id);
+                    break;
+                // ... handle other event types
+                default:
+                    Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+                    break;
+            }
+
+
+        }
+
+        private async Task UpdatePaymentReceivedAsync(string paymentIntentId)
+        {
+            var order = await _unitOfWork.GetRepositry<Guid, Order>()
+                .GetByIdAsync(new OrderWithPaymentIntentSpecification(paymentIntentId));
+
+            order.Status = OrderStatus.PaymentSuccess;
+
+            _unitOfWork.GetRepositry<Guid, Order>().Update(order);
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        private async Task UpdatePaymentFailedAsync(string paymentIntentId)
+        {
+            var order = await _unitOfWork.GetRepositry<Guid, Order>()
+                .GetByIdAsync(new OrderWithPaymentIntentSpecification(paymentIntentId));
+
+            order.Status = OrderStatus.PaymentFailed;
+
+            _unitOfWork.GetRepositry<Guid, Order>().Update(order);
+
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Store.G05.Services.Specifications.Products
 {
     public class ProductsWithBrandAndTypeSpecifications : BaseSpecifications<int, Product>
-    {
+    { 
         public ProductsWithBrandAndTypeSpecifications(int id) : base(P => P.Id == id)
         {
             ApplyIncludes();

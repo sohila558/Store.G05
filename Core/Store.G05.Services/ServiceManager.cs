@@ -44,6 +44,7 @@ namespace Store.G05.Services
         public IAuthServices AuthServices { get; } = new AuthServices(userManager, options, _mapper);
 
         public IOrderServices OrderServices { get; } = new OrderServices(_unitOfWork, _mapper, basketRepositry);
+
         public IPaymentServices PaymentServices { get; } = new PaymentServices(basketRepositry, _unitOfWork, _configuration, _mapper);
     }
 }
